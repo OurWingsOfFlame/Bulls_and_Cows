@@ -1,0 +1,35 @@
+import random
+
+def get_num():
+    maybe_answers = []
+    for i in range(123, 9877):
+        if len(set(map(int, str(i).zfill(4)))) == 4:
+            maybe_answers.append(list(str(i).zfill(4)))
+    random_num = random.choice(maybe_answers)
+    return random_num
+
+def check(player, right):
+    tmp_bulls, tmp_cows = 0, 0
+    for i, num in enumerate(player):
+        if num in right:
+            if num == right[i]:
+                tmp_bulls += 1
+            else:
+                tmp_cows += 1
+    return tmp_bulls, tmp_cows
+
+
+win_num = get_num()
+flag = True
+while flag:
+    new = (input('Введите число: '))
+    bulls, cows = check(new, win_num)
+    if bulls == 4:
+        print('*' * 50)
+        print('4 быка!')
+        print('Вы поедили!')
+        flag = False
+    else: 
+        print('Быки:', bulls)
+        print('Коровы:', cows)
+        print('*' * 50)
